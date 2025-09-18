@@ -4,29 +4,118 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Smart Crop Advisory Chatbot</title>
-  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      height: 100vh;
+    }
+    /* Sidebar */
+    .sidebar {
+      width: 220px;
+      background: #2c3e50;
+      color: #fff;
+      padding: 20px;
+    }
+    .sidebar h2 {
+      text-align: center;
+    }
+    .sidebar a {
+      display: block;
+      padding: 10px;
+      margin: 8px 0;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+    .sidebar a:hover {
+      background: #34495e;
+    }
+    /* Main content */
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .chatbot-container {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #f5f6fa;
+    }
+    iframe {
+      border: none;
+      width: 350px;
+      height: 430px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+    /* Chat history */
+    .history {
+      height: 150px;
+      background: #ecf0f1;
+      padding: 10px;
+      overflow-y: auto;
+    }
+    .history h3 {
+      margin: 0;
+    }
+    .message {
+      margin: 5px 0;
+      padding: 5px 10px;
+      background: #dcdde1;
+      border-radius: 5px;
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <h1>🌱 Smart Crop Advisory System</h1>
-    <p>Helping farmers with crop, fertilizer, and weather advice</p>
-  </header>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h2>Farmer Bot</h2>
+    <a href="#">Home</a>
+    <a href="#">Weather</a>
+    <a href="#">Fertilizer Advice</a>
+    <a href="#">Market Prices</a>
+  </div>
 
-  <main>
-    <section>
-      <h2>Chat with the Bot</h2>
-      <!-- Your Dialogflow Bot iframe -->
-      <iframe
-        allow="microphone;"
-        height="430"
-        width="350"
-        src="https://bot.dialogflow.com/39b8085c-2edf-4e64-b79c-51302c0b0a1b">
-      </iframe>
-    </section>
-  </main>
+  <!-- Main Content -->
+  <div class="main">
+    <div class="chatbot-container">
+      <!-- Dialogflow Bot -->
+      <iframe src="https://bot.dialogflow.com/39b8085c-2edf-4e64-b79c-51302c0b0a1b"></iframe>
+    </div>
 
-  <footer>
-    <p>© 2025 Smart Crop Advisory | Govt. of Punjab</p>
-  </footer>
+    <!-- Chat History -->
+    <div class="history" id="history">
+      <h3>Chat History</h3>
+    </div>
+  </div>
+
+  <script>
+    // Dummy chat history system (just to simulate messages)
+    const historyDiv = document.getElementById("history");
+
+    // Example messages stored in localStorage
+    let messages = JSON.parse(localStorage.getItem("chatHistory")) || [];
+
+    function renderHistory() {
+      historyDiv.innerHTML = "<h3>Chat History</h3>";
+      messages.forEach(msg => {
+        const div = document.createElement("div");
+        div.className = "message";
+        div.innerText = msg;
+        historyDiv.appendChild(div);
+      });
+    }
+
+    // For demo: add a fake message every time page loads
+    messages.push("Farmer: How to grow rice?");
+    messages.push("Bot: Use nitrogen fertilizer.");
+    localStorage.setItem("chatHistory", JSON.stringify(messages));
+
+    renderHistory();
+  </script>
 </body>
 </html>

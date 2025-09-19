@@ -10,20 +10,20 @@ const chatBox = document.getElementById('chat-box');
 const newChatBtn = document.querySelector('.new-chat-btn');
 const historyDiv = document.getElementById('history');
 
-let chatHistory = []; // stores previous chats
+let chatHistory = [];
 let currentChat = [];
 
 // Sidebar toggle
 toggleBtn.addEventListener('click', () => {
   const expanded = chatPanel.classList.contains('fullscreen');
-  if(expanded) chatPanel.classList.remove('fullscreen');
+  if (expanded) chatPanel.classList.remove('fullscreen');
   sidebar.classList.toggle('collapsed');
 });
 
 // Chat expand
 expandBtn.addEventListener('click', () => {
   const collapsed = sidebar.classList.contains('collapsed');
-  if(!collapsed) sidebar.classList.add('collapsed');
+  if (!collapsed) sidebar.classList.add('collapsed');
   chatPanel.classList.toggle('fullscreen');
 });
 
@@ -35,11 +35,11 @@ toggleModeBtn.addEventListener('click', () => {
 
 // Send message
 sendBtn.addEventListener('click', sendMessage);
-userInput.addEventListener('keypress', e => { if(e.key==='Enter') sendMessage(); });
+userInput.addEventListener('keypress', e => { if (e.key === 'Enter') sendMessage(); });
 
 function sendMessage() {
   const msg = userInput.value.trim();
-  if(!msg) return;
+  if (!msg) return;
 
   const userP = document.createElement('div');
   userP.classList.add('chat-message', 'user-msg');
@@ -51,7 +51,7 @@ function sendMessage() {
   // Dummy bot reply
   const botP = document.createElement('div');
   botP.classList.add('chat-message', 'bot-msg');
-  botP.textContent = "Bot: " + msg; // replace with real logic
+  botP.textContent = "Bot: " + msg;
   chatBox.appendChild(botP);
 
   currentChat.push({ sender: 'bot', text: "Bot: " + msg });
@@ -62,8 +62,8 @@ function sendMessage() {
 
 // New Chat
 newChatBtn.addEventListener('click', () => {
-  if(currentChat.length){
-    chatHistory.unshift(currentChat); // add to history
+  if (currentChat.length) {
+    chatHistory.unshift(currentChat);
     updateHistoryUI();
   }
   currentChat = [];

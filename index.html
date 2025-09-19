@@ -3,159 +3,81 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Smart Crop Advisory Chatbot</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      display: flex;
-      height: 100vh;
-    }
-    /* Sidebar */
-    .sidebar {
-      width: 260px;
-      background: #2c3e50;
-      color: white;
-      display: flex;
-      flex-direction: column;
-    }
-    .sidebar-header {
-      padding: 15px;
-      border-bottom: 1px solid #34495e;
-    }
-    .new-chat {
-      width: 100%;
-      padding: 10px;
-      background: #27ae60;
-      border: none;
-      color: white;
-      cursor: pointer;
-      border-radius: 5px;
-      font-size: 16px;
-    }
-    .chat-list {
-      flex: 1;
-      overflow-y: auto;
-      padding: 10px;
-    }
-    .chat-item {
-      background: #34495e;
-      margin: 8px 0;
-      padding: 10px;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    .chat-item:hover {
-      background: #3d566e;
-    }
-    /* Main area */
-    .main {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      background: #ecf0f1;
-    }
-    .topbar {
-      background: #bdc3c7;
-      padding: 10px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .mode-switch {
-      padding: 6px 12px;
-      border: none;
-      cursor: pointer;
-      border-radius: 4px;
-    }
-    .chatbot-container {
-      flex: 1;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    iframe {
-      border: none;
-      width: 400px;
-      height: 500px;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    }
-    /* Dark mode */
-    body.dark {
-      background: #181818;
-      color: white;
-    }
-    body.dark .main {
-      background: #1e1e1e;
-    }
-    body.dark .topbar {
-      background: #333;
-    }
-    body.dark .sidebar {
-      background: #111;
-    }
-    body.dark .chat-item {
-      background: #222;
-    }
-  </style>
+  <title>AgriBot - Smart Farming Assistant</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Sidebar -->
-  <div class="sidebar">
-    <div class="sidebar-header">
-      <button class="new-chat" onclick="createNewChat()">+ New Chat</button>
-    </div>
-    <div class="chat-list" id="chatList"></div>
-  </div>
 
-  <!-- Main Content -->
-  <div class="main">
-    <div class="topbar">
-      <h2 id="chatTitle">Smart Crop Advisory</h2>
-      <button class="mode-switch" onclick="toggleMode()">🌙 Switch Mode</button>
-    </div>
-    <div class="chatbot-container">
-      <iframe src="https://bot.dialogflow.com/39b8085c-2edf-4e64-b79c-51302c0b0a1b"></iframe>
+<!-- Dark/Light toggle button top-right -->
+<button id="toggle-mode" class="mode-toggle">🌙</button>
+
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+  <button class="sidebar-toggle" id="toggle-sidebar">☰</button>
+  <div class="sidebar-content">
+    <button class="home-btn">🏠 Home</button>
+    <button class="new-chat-btn">+ New Chat</button>
+    <div class="recent-chats">
+      <h4>Recent Chats</h4>
+      <div id="history"></div>
     </div>
   </div>
+</div>
 
-  <script>
-    let chats = JSON.parse(localStorage.getItem("chats")) || [];
-    let currentChat = null;
+<!-- Main content -->
+<div class="main-content">
 
-    function renderChats() {
-      const list = document.getElementById("chatList");
-      list.innerHTML = "";
-      chats.forEach((chat, index) => {
-        const div = document.createElement("div");
-        div.className = "chat-item";
-        div.innerText = chat.title || `Chat ${index+1}`;
-        div.onclick = () => loadChat(index);
-        list.appendChild(div);
-      });
-    }
+  <!-- Hero Section -->
+  <section class="hero">
+    <img src="./rice-fields.jpg" alt="Farming Illustration" class="hero-img">
+    <div class="hero-overlay">
+      <h1><span class="welcome">Welcome</span><span class="comma">,</span> <span class="farmer">Farmer</span></h1>
+      <p>How can I help you today?</p>
+    </div>
+  </section>
 
-    function createNewChat() {
-      const newChat = { title: `Chat ${chats.length+1}`, messages: [] };
-      chats.push(newChat);
-      localStorage.setItem("chats", JSON.stringify(chats));
-      renderChats();
-      loadChat(chats.length-1);
-    }
+  <!-- Features Section -->
+  <section class="features">
+    <h2>What Can I Do?</h2>
+    <div class="feature">
+      <h3>💡 Crop-Specific Fertilizer Advice</h3>
+      <p>Get the right fertilizer recommendations for your crop, boosting yield and saving costs.</p>
+    </div>
+    <div class="feature">
+      <h3>🕒 Always Available, Farmer-Friendly</h3>
+      <p>No waiting for experts — the chatbot is ready 24/7 to guide you in simple, farmer-friendly language.</p>
+    </div>
+    <div class="feature">
+      <h3>👌 Easy & Interactive</h3>
+      <p>Just type in your crop details and get instant, clear advice within seconds.</p>
+    </div>
+    <div class="feature">
+      <h3>🌦️ Weather Prediction & Alerts</h3>
+      <p>Stay prepared! The chatbot warns about upcoming bad weather so you can protect your crops in time.</p>
+    </div>
+  </section>
 
-    function loadChat(index) {
-      currentChat = index;
-      document.getElementById("chatTitle").innerText = chats[index].title;
-    }
+  <!-- Chat Section -->
+  <div class="chat-container">
+    <div class="chat-panel" id="chat-panel">
+      <div class="chat-header">
+        <h2>AgriBot Chat</h2>
+        <div class="chat-controls">
+          <button id="expand">🗖</button>
+        </div>
+      </div>
+      <div class="chat-box" id="chat-box"></div>
+      <div class="input-box">
+        <input type="text" id="user-input" placeholder="Ask about crops, fertilizers, or anything...">
+        <button id="send-btn">➤</button>
+      </div>
+    </div>
+  </div>
 
-    function toggleMode() {
-      document.body.classList.toggle("dark");
-    }
+</div>
 
-    // Initialize
-    renderChats();
-    if (chats.length === 0) createNewChat();
-  </script>
+<script src="script.js"></script>
 </body>
 </html>
+
+

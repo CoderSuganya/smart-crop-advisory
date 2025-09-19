@@ -1,29 +1,45 @@
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  text-align: center;
-}
+/* ... previous styles remain the same ... */
 
-header {
-  background: #2e7d32;
-  color: white;
-  padding: 20px;
-}
-
-main {
-  margin: 20px;
-}
-
-iframe {
-  border: 1px solid #ddd;
-  border-radius: 8px;
-}
-
-footer {
-  background: #f3f3f3;
+/* Chat box */
+.chat-box {
+  flex: 1;
   padding: 10px;
-  position: fixed;
-  width: 100%;
-  bottom: 0;
+  overflow-y: auto;
+  color: #000; /* default black text */
+}
+
+body.dark-mode .chat-box {
+  color: #e0e0e0; /* visible in dark mode */
+  background: #1c1c1c; /* subtle dark background */
+}
+
+/* Chat messages bubbles */
+.chat-message {
+  padding: 8px 12px;
+  margin: 5px 0;
+  border-radius: 12px;
+  max-width: 75%;
+  word-wrap: break-word;
+}
+
+.user-msg {
+  background: #a8e6cf;
+  align-self: flex-end;
+  color: #000;
+}
+
+.bot-msg {
+  background: #dcedc1;
+  align-self: flex-start;
+  color: #000;
+}
+
+body.dark-mode .user-msg {
+  background: #388e3c;
+  color: #fff;
+}
+
+body.dark-mode .bot-msg {
+  background: #2e7d32;
+  color: #fff;
 }
